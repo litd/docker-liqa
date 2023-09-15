@@ -1,4 +1,4 @@
-# % Last Change: Fri Sep 15 05:32:19 PM 2023 CDT
+# % Last Change: Fri Sep 15 06:54:31 PM 2023 CDT
 # Base Image
 FROM debian:10
 
@@ -16,6 +16,8 @@ RUN apt-get update --fix-missing && \
     python3-pysam \
     r-base \
     r-cran-car && \
+    ln -s /usr/bin/python3 /usr/bin/python && \
+    locale-gen en_US.UTF-8 && \
     echo 'install.packages("betareg",repos="http://cran.us.r-project.org")' > /opt/packages.R && \
     /usr/bin/Rscript /opt/packages.R && \
     rm /opt/packages.R && \
@@ -26,6 +28,8 @@ RUN apt-get update --fix-missing && \
     pip3 install lifelines liqa && \
     apt-get clean all && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/log/dpkg.log /var/tmp/*
+
+
 
 # set timezone, debian and ubuntu
 RUN ln -sf /usr/share/zoneinfo/America/Chicago /etc/localtime && \
