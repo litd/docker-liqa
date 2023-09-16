@@ -1,4 +1,4 @@
-# % Last Change: Fri Sep 15 06:54:31 PM 2023 CDT
+# % Last Change: Fri Sep 15 08:45:30 PM 2023 CDT
 # Base Image
 FROM debian:10
 
@@ -10,6 +10,7 @@ ENV PATH /opt/conda/bin:$PATH
 # Installation
 RUN apt-get update --fix-missing && \
     apt-get install -y \
+    locales \
     curl \
     python3 \
     python3-pip \
@@ -29,7 +30,9 @@ RUN apt-get update --fix-missing && \
     apt-get clean all && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/log/dpkg.log /var/tmp/*
 
-
+ENV LC_ALL C.UTF-8
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US.UTF-8
 
 # set timezone, debian and ubuntu
 RUN ln -sf /usr/share/zoneinfo/America/Chicago /etc/localtime && \
